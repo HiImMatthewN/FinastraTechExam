@@ -4,5 +4,5 @@ data class Author(
     val id:String,
     val username:String,
     val name:String,
-    val profileImageUrl:String
+    val profileImage:String
 )

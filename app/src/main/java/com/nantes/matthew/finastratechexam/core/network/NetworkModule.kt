@@ -5,11 +5,13 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
+
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -20,10 +22,12 @@ class NetworkModule {
     fun providesOkHTTP(): OkHttpClient {
         val client = OkHttpClient.Builder()
             .addInterceptor { chain ->
-                val request = chain.request().apply {
-                    url.newBuilder().addQueryParameter("client_id", BuildConfig.API_KEY)
-                }
-                chain.proceed(request)
+                val currentRequest = chain.request()
+                val currentUrl = currentRequest.url
+                val updatedUrl = currentUrl.newBuilder().addQueryParameter("client_id", BuildConfig.API_KEY).build()
+                val updatedRequest = currentRequest.newBuilder().url(updatedUrl).build()
+
+                chain.proceed(updatedRequest)
             }
             .connectTimeout(1, TimeUnit.MINUTES) // connect timeout
             .writeTimeout(1, TimeUnit.MINUTES) // write timeout
