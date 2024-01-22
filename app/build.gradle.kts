@@ -1,10 +1,11 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("dagger.hilt.android.plugin")
     id("com.google.devtools.ksp")
     id("kotlin-parcelize")
     id("androidx.navigation.safeargs")
-    id("dagger.hilt.android.plugin")
+
 }
 
 android {
@@ -19,6 +20,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
     }
 
     buildTypes {
@@ -47,12 +49,12 @@ dependencies {
 
     //Dependency Injection
     val hiltVersion = "1.1.0"
-    val daggerHiltVersion = "2.48.1"
+    val daggerHiltVersion = "2.50"
 
     implementation("com.google.dagger:hilt-android:$daggerHiltVersion")
-    implementation("com.google.dagger:hilt-compiler:$daggerHiltVersion")
+    ksp("com.google.dagger:hilt-compiler:$daggerHiltVersion")
     implementation("androidx.hilt:hilt-common:$hiltVersion")
-    implementation("androidx.hilt:hilt-compiler:$hiltVersion")
+    ksp("androidx.hilt:hilt-compiler:$hiltVersion")
 
     //Network
     val okhttpVersion = "4.12.0"
@@ -67,7 +69,7 @@ dependencies {
 
     //UI
     val navVersion = "2.7.6"
-    val glideVersion = "4.13.0"
+    val glideVersion = "4.16.0"
     val materialVersion = "1.11.0"
     val androidCoreVersion = "1.12.0"
     val appCompatVersion = "1.6.1"
