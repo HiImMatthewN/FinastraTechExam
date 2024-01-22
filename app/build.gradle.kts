@@ -1,3 +1,6 @@
+import java.util.Properties
+import java.io.FileInputStream
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -7,6 +10,10 @@ plugins {
     id("androidx.navigation.safeargs")
 
 }
+
+val keystorePropertiesFile = rootProject.file("local.properties")
+val localProps = Properties()
+localProps.load(FileInputStream(keystorePropertiesFile))
 
 android {
     namespace = "com.nantes.matthew.finastratechexam"
@@ -24,12 +31,21 @@ android {
     }
 
     buildTypes {
+
+        debug {
+            buildConfigField("String", "BASE_URL", localProps.getProperty("BASE_URL"))
+            buildConfigField("String", "API_KEY", localProps.getProperty("API_KEY"))
+        }
+
         release {
+            buildConfigField("String", "BASE_URL", localProps.getProperty("BASE_URL"))
+            buildConfigField("String", "API_KEY", localProps.getProperty("API_KEY"))
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
         }
     }
     compileOptions {
@@ -42,6 +58,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 }
 
