@@ -11,11 +11,13 @@ class PhotoRemote(
     val likes:Int,
     @SerializedName("created_at")
     val dateCreated:String,
+    @SerializedName("color")
+    val color:String,
     @SerializedName("user")
     val author:AuthorRemote
 
 )
 class PhotoUrls(
-    @SerializedName("full")
+    @SerializedName("regular")
     val full:String
 )

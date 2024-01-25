@@ -117,5 +117,9 @@ dependencies {
     testImplementation("junit:junit:$junitVersion")
     androidTestImplementation("androidx.test.ext:junit:$androidJUnitVersion")
     androidTestImplementation("androidx.test.espresso:espresso-core:$espressoVersion")
+    implementation("com.makeramen:roundedimageview:2.3.0")
+    implementation("androidx.recyclerview:recyclerview:1.2.1")
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+    implementation("com.github.valkriaine:Bouncy:2.3")
 
 }

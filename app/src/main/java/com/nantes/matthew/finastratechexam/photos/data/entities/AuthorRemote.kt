@@ -15,5 +15,7 @@ class AuthorRemote(
 )
 class ProfileImage(
     @SerializedName("small")
-    val small:String
+    val small:String,
+    @SerializedName("medium")
+    val medium:String
 )

@@ -25,9 +25,10 @@ class PhotoRepositoryImpl @Inject constructor(private val api: PhotoApi) : Photo
                         id = photoRemote.author.id,
                         name = photoRemote.author.name,
                         username = photoRemote.author.userName,
-                        profileImage = photoRemote.author.profileImage.small,
+                        profileImage = photoRemote.author.profileImage.medium,
                     ),
                     likes = photoRemote.likes,
+                    color = photoRemote.color,
                     dateCreated = DateUtil.getDateFromString(
                         format = DateUtil.DATE_TIME_FORMAT,
                         dateString = photoRemote.dateCreated

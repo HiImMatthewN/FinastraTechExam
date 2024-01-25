@@ -6,7 +6,7 @@ import retrofit2.http.GET
 
 interface PhotoApi {
 
-    @GET("/photos")
+    @GET("/photos?per_page=50")
     suspend fun getPhotos(): Response<List<PhotoRemote>>
 
 
