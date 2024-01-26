@@ -9,7 +9,6 @@ data class Photo(
     val id: String,
     val url: String,
     val likes: Int,
-    val color:String,
     val author: Author,
     val dateCreated: Date
 ) {

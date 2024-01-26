@@ -5,6 +5,8 @@ import javax.inject.Inject
 
 class GetPhotosUseCase @Inject constructor(private val repository: PhotoRepository) {
 
-    suspend operator fun invoke() = repository.getPhotos()
+     operator fun invoke(page: Int) = repository.getPhotos(
+        page = page
+    )
 
 }

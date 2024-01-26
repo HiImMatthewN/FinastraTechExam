@@ -7,7 +7,6 @@ plugins {
     id("dagger.hilt.android.plugin")
     id("com.google.devtools.ksp")
     id("kotlin-parcelize")
-    id("androidx.navigation.safeargs")
 
 }
 
@@ -96,11 +95,11 @@ dependencies {
     implementation("androidx.appcompat:appcompat:$appCompatVersion")
     implementation("com.google.android.material:material:$materialVersion")
     implementation("androidx.constraintlayout:constraintlayout:$constraintLayoutVersion")
-    implementation("androidx.navigation:navigation-fragment-ktx:$$navVersion")
-    implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
     implementation("com.github.bumptech.glide:glide:$glideVersion")
     ksp("com.github.bumptech.glide:ksp:$glideVersion")
-
+    // ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+    implementation("androidx.activity:activity-ktx:1.8.2")
 
     //Local
     val roomVersion = "2.6.1"
@@ -121,5 +120,10 @@ dependencies {
     implementation("androidx.recyclerview:recyclerview:1.2.1")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation("com.github.valkriaine:Bouncy:2.3")
+
+    //UI
+    implementation ("androidx.core:core-splashscreen:1.0.1")
+
+
 
 }
