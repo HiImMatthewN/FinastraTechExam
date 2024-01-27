@@ -1,3 +1,4 @@
+import groovy.xml.XmlParser
 import java.util.Properties
 import java.io.FileInputStream
 
@@ -59,6 +60,14 @@ android {
         viewBinding = true
         buildConfig = true
     }
+
+    applicationVariants.all {
+        outputs.all {
+            this as com.android.build.gradle.internal.api.ApkVariantOutputImpl
+            outputFileName = "FinastraTechExam v${defaultConfig.versionName} - ${buildType.name.uppercase()}.apk"
+        }
+    }
+
 }
 
 dependencies {
@@ -84,12 +93,16 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
 
     //UI
-    val navVersion = "2.7.6"
     val glideVersion = "4.16.0"
     val materialVersion = "1.11.0"
     val androidCoreVersion = "1.12.0"
     val appCompatVersion = "1.6.1"
     val constraintLayoutVersion = "2.1.4"
+    val splashScreenVersion = "1.0.1"
+    val recyclerViewVersion = "1.2.1"
+    val lifeCycleVersion = "2.7.0"
+    val activityKtxVersion = "1.8.2"
+    val bouncyRecyclerView =  "2.3"
 
     implementation("androidx.core:core-ktx:$androidCoreVersion")
     implementation("androidx.appcompat:appcompat:$appCompatVersion")
@@ -97,33 +110,35 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:$constraintLayoutVersion")
     implementation("com.github.bumptech.glide:glide:$glideVersion")
     ksp("com.github.bumptech.glide:ksp:$glideVersion")
-    // ViewModel
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
-    implementation("androidx.activity:activity-ktx:1.8.2")
+
+    implementation ("androidx.core:core-splashscreen:$splashScreenVersion")
+    implementation("androidx.recyclerview:recyclerview:$recyclerViewVersion")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifeCycleVersion")
+    implementation("androidx.activity:activity-ktx:$activityKtxVersion")
+    implementation("com.github.valkriaine:Bouncy:$bouncyRecyclerView")
 
     //Local
     val roomVersion = "2.6.1"
-
     implementation("androidx.room:room-runtime:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
     ksp("androidx.room:room-compiler:$roomVersion")
 
 
+    //Corotuins
+    val coroutineVersion = "1.7.3"
+
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutineVersion")
+
     //Testing
     val junitVersion = "4.13.2"
     val androidJUnitVersion = "1.1.5"
     val espressoVersion = "3.5.1"
+    val googleTruthVersion = "1.1"
     testImplementation("junit:junit:$junitVersion")
     androidTestImplementation("androidx.test.ext:junit:$androidJUnitVersion")
     androidTestImplementation("androidx.test.espresso:espresso-core:$espressoVersion")
-    implementation("com.makeramen:roundedimageview:2.3.0")
-    implementation("androidx.recyclerview:recyclerview:1.2.1")
-    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
-    implementation("com.github.valkriaine:Bouncy:2.3")
-
-    //UI
-    implementation ("androidx.core:core-splashscreen:1.0.1")
-
-
+    testImplementation("com.google.truth:truth:$googleTruthVersion")
 
 }

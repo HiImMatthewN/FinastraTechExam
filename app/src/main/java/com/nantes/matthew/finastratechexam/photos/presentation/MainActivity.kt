@@ -2,6 +2,7 @@ package com.nantes.matthew.finastratechexam.photos.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.isVisible
@@ -21,7 +22,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binder: ActivityMainBinding
 
     private val viewModelMain by viewModels<MainViewModel>()
-
+    private val adapterPhotoFeed by lazy {
+        PhotoFeedAdapter(this)
+    }
     private val spanCount by lazy {
         if (isPortrait()) 2 else 3
     }
@@ -37,9 +40,13 @@ class MainActivity : AppCompatActivity() {
         binder = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binder.root)
 
-        val adapterPhotoFeed = PhotoFeedAdapter(this)
-        adapterPhotoFeed.stateRestorationPolicy =
-            RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+        initViews()
+        initOnClicks()
+        subscribeObservers()
+
+
+    }
+    private fun initViews(){
         binder.rvPhotoFeed.apply {
             adapter = adapterPhotoFeed
 
@@ -57,7 +64,7 @@ class MainActivity : AppCompatActivity() {
 
                 override fun onRelease() {
                     if (distance >= PULL_TO_REFRESH_THRESHOLD) {
-                        viewModelMain.fetchPhotos()
+                        viewModelMain.setIntent(PhotoFeedIntent.FetchPhotos)
                         binder.tvReleaseToRefresh.isVisible = false
                     }
 
@@ -67,7 +74,6 @@ class MainActivity : AppCompatActivity() {
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)
-
                     viewModelMain.setIntent(
                         PhotoFeedIntent.UserScrolled(
                             isScrolling = newState == RecyclerView.SCROLL_STATE_DRAGGING
@@ -80,12 +86,18 @@ class MainActivity : AppCompatActivity() {
             )
 
         }
+
+    }
+    private fun initOnClicks(){
         binder.btnPreviousPage.setOnClickListener {
             viewModelMain.setIntent(PhotoFeedIntent.PreviousPage)
         }
         binder.btnNextPage.setOnClickListener {
             viewModelMain.setIntent(PhotoFeedIntent.NextPage)
         }
+    }
+    private fun subscribeObservers() {
+
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModelMain.uiState.collect { state ->
@@ -93,15 +105,24 @@ class MainActivity : AppCompatActivity() {
                     binder.btnNextPage.isVisible = state.showNextButton
                     binder.btnPreviousPage.isVisible = state.showPreviousButton
                     binder.progressBar.isVisible = state.showProgressBar
+
+
+                    if (!state.error.isNullOrEmpty()){
+                        binder.tvError.isVisible = true
+                        binder.tvError.text = state.error
+                    }else{
+                        binder.tvError.isVisible = false
+                        binder.tvError.text = ""
+                    }
                 }
 
 
             }
 
         }
-
-
     }
+
+
 
 
 }

@@ -71,4 +71,19 @@
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
+    <TextView
+        tools:visibility="visible"
+        android:visibility="gone"
+        android:fontFamily="@font/instagram_sans_medium"
+        android:textColor="@color/white"
+        tools:text="@string/sample_error_message"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/tvError"
+        android:textSize="16sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

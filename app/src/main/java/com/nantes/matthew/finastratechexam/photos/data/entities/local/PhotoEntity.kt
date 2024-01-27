@@ -23,6 +23,7 @@ fun PhotoEntity.toDomain(): Photo {
         likes = this.photoInfoEntity.likes,
         dateCreated = this.photoInfoEntity.dateCreated.let { epochTime ->
             Date(epochTime)
-        }
+        },
+        page = this.photoInfoEntity.page
     )
 }

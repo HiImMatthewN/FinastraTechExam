@@ -8,5 +8,6 @@ data class PhotoFeedState(
     val showNextButton:Boolean = false,
     val showProgressBar:Boolean = true,
     val currentPage:Int = 1,
-    val isScrolling:Boolean = false
+    val isScrolling:Boolean = false,
+    val error:String? = null
 )

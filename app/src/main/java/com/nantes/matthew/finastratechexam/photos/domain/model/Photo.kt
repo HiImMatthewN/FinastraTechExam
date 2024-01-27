@@ -10,7 +10,8 @@ data class Photo(
     val url: String,
     val likes: Int,
     val author: Author,
-    val dateCreated: Date
+    val dateCreated: Date,
+    val page:Int
 ) {
 
     fun getDateCreateString(): String {

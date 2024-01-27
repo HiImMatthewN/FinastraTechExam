@@ -10,7 +10,7 @@ inline fun <ResultType, RequestType> networkBoundResource(
     crossinline query: () -> Flow<ResultType>,
     crossinline fetch: suspend () -> RequestType,
     crossinline saveFetchResult: suspend (RequestType) -> Unit,
-    crossinline onFetchFailed: (Throwable) -> Unit = { },
+    crossinline onFetchFailed: (Exception) -> Unit = { },
     crossinline shouldFetch: (ResultType) -> Boolean = { true }
 ) = flow<Resource<ResultType>> {
     val data = query().first()
@@ -21,9 +21,9 @@ inline fun <ResultType, RequestType> networkBoundResource(
         try {
             saveFetchResult(fetch())
             query().map { Resource.success(it) }
-        } catch (throwable: Throwable) {
-            onFetchFailed(throwable)
-            query().map { Resource.error(throwable.localizedMessage ?:"Unknown Error", it) }
+        } catch (exception: Exception) {
+            onFetchFailed(exception)
+            query().map { Resource.error(exception.toReadableMessage(), it) }
         }
     } else {
         query().map { Resource.success(it) }
