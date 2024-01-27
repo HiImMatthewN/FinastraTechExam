@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.factor.bouncy.util.OnOverPullListener
@@ -51,7 +52,7 @@ class MainActivity : AppCompatActivity() {
             adapter = adapterPhotoFeed
 
             layoutManager =
-                StaggeredGridLayoutManager(spanCount, StaggeredGridLayoutManager.VERTICAL)
+                GridLayoutManager(this@MainActivity, spanCount)
             onOverPullListener = object : OnOverPullListener {
                 override fun onOverPulledBottom(deltaDistance: Float) {
 
@@ -101,11 +102,12 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModelMain.uiState.collect { state ->
+                    println("ITEMS ${state.photos.size}")
+
                     adapterPhotoFeed.submitList(state.photos)
                     binder.btnNextPage.isVisible = state.showNextButton
                     binder.btnPreviousPage.isVisible = state.showPreviousButton
                     binder.progressBar.isVisible = state.showProgressBar
-
 
                     if (!state.error.isNullOrEmpty()){
                         binder.tvError.isVisible = true

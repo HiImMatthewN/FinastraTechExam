@@ -87,7 +87,7 @@ class MainViewModel @Inject constructor(private val getPhotosUseCase: GetPhotosU
                     Status.SUCCESS,Status.LOADING -> {
                         _uiState.update { currentState ->
                             currentState.copy(
-                                photos = result.data ?: emptyList(),
+                                photos = if (result.data.isNullOrEmpty()) currentState.photos else result.data,
                                 showProgressBar = result.data.isNullOrEmpty() &&
                                 currentState.photos.isEmpty(),
                                 showNextButton =
