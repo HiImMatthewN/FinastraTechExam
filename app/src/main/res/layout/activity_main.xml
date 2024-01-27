@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutCoordinator"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".photos.presentation.MainActivity">
+
+    <com.factor.bouncy.BouncyRecyclerView
+        android:id="@+id/rvPhotoFeed"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="8dp"
+        app:recyclerview_damping_ratio="DAMPING_RATIO_LOW_BOUNCY"
+        app:recyclerview_fling_animation_size="0.1"
+        app:recyclerview_overscroll_animation_size="0.7"
+        app:recyclerview_stiffness="STIFFNESS_LOW"
+        tools:listitem="@layout/item_photo" />
+
+    <TextView
+        android:id="@+id/tvReleaseToRefresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:drawablePadding="4dp"
+        android:fontFamily="@font/instagram_sans_light"
+        android:text="@string/release_to_refresh"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:drawableEndCompat="@drawable/ic_arrow_up"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnNextPage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="48dp"
+        android:src="@drawable/ic_arrow_right"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:pressedTranslationZ="16dp"
+        app:shapeAppearance="@null"
+        app:tint="@color/white" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnPreviousPage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="48dp"
+        android:src="@drawable/ic_arrow_left"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:pressedTranslationZ="16dp"
+        app:shapeAppearance="@null"
+        app:tint="@color/white" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        tools:visibility="visible"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        tools:visibility="visible"
+        android:visibility="gone"
+        android:fontFamily="@font/instagram_sans_medium"
+        android:textColor="@color/white"
+        tools:text="@string/sample_error_message"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/tvError"
+        android:textSize="16sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
